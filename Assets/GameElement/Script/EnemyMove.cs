@@ -42,6 +42,10 @@ public class EnemyMove : MonoBehaviour
             healt -= 10;
             
         }
+        else if (collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.GetComponent<CharacterSkills>().LowHealt();
+        }
     }
     void Update()
     {

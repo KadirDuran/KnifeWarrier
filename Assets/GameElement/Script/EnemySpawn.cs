@@ -9,7 +9,7 @@ public class EnemySpawn : MonoBehaviour
     public GameObject spawnGameObject;
     void Start()
     {
-        InvokeRepeating("SpawnEnemy", 2f, 5f);
+        InvokeRepeating("SpawnEnemy", 2f, 3f);
     }
     void SpawnEnemy()
     {

@@ -33,18 +33,10 @@ public class KnifeCenter : MonoBehaviour
         for (int i = 0; i < knifes.Count; i++)
         {
             knifes[i].transform.rotation = Quaternion.Euler(0f, 0f, i * point);
-            
 
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.gameObject.tag=="BonusKnife")
-        {
-            Destroy(collision.gameObject);
-            AddKnifes(1);
-        }
-    }
+   
     void Update()
     {
         transform.Rotate(0f, 0f, turnSpeed);
