@@ -2,52 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.U2D;
 using UnityEngine.UI;
 
 public class EnemyMove : MonoBehaviour
 {
     GameObject player;
-    public GameObject gold;
-    Slider slider;
     SpriteRenderer sprite;
-    TextMeshProUGUI txtHealt;
-    public AudioClip clipKnife,clipDead;
-    AudioSource source;
-    int healt = 100;
-    void Start()
+    float enemySpeedx;
+    private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
         sprite = GetComponent<SpriteRenderer>();
-        source = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>();
-        slider = GetComponentInChildren<Slider>();
-        txtHealt = GetComponentInChildren<TextMeshProUGUI>();
+        player = GetComponent<EnemySkills>().player;
+        enemySpeedx = GetComponent<EnemySkills>().enemySpeed;
     }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag=="Knife")
-        {
-
-            source.clip=clipKnife;
-            
-            if (slider.value==0)
-            {
-                source.clip = clipDead;
-                Instantiate(gold,transform.position,Quaternion.identity);
-                Destroy(gameObject);
-            }
-            source.Play();
-            slider.value -= 0.1f;
-            txtHealt.text = healt.ToString();
-            healt -= 10;
-            
-        }
-        else if (collision.gameObject.tag == "Player")
-        {
-            collision.gameObject.GetComponent<CharacterSkills>().LowHealt();
-        }
-    }
-    void Update()
+    void FixedUpdate()
     {
         if(transform.position.x>player.transform.position.x)
         {
@@ -60,6 +31,6 @@ public class EnemyMove : MonoBehaviour
          
         }
             
-        transform.position = Vector3.MoveTowards(transform.position,player.transform.position,0.5f*Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position,player.transform.position,enemySpeedx*Time.deltaTime);
     }
 }

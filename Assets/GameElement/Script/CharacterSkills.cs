@@ -7,14 +7,31 @@ using UnityEngine.UI;
 public class CharacterSkills : MonoBehaviour
 {
     int healt = 100;
-    int playerHealt = 100;
+    float playerHealt = 100;
     int gold = 0;
-    public TextMeshProUGUI txtGold,txtKnifePrice,txtSpeedPrice,txtHealt;
+    int puan = 0;
+    
+    public TextMeshProUGUI txtGold,txtKnifePrice,txtSpeedPrice,slideText,txtLevel;
     public KnifeCenter knifeCenter;
-    public Slider slider;
+    public Slider slider,sliderPuan;
      void Start()
     {
      knifeCenter = GetComponent<KnifeCenter>();
+        PlayerPrefs.SetInt("Level", 0);
+        txtLevel.text = "Level : 0"; 
+    }
+    public void AddPuan(int xp)
+    {
+        puan += xp;
+        slideText.text = puan.ToString();
+        sliderPuan.value +=float.Parse((xp/1000.0).ToString());
+        if(sliderPuan.value==1)
+        {
+           sliderPuan.value = 0;
+            int level = PlayerPrefs.GetInt("Level") + 1;
+            PlayerPrefs.SetInt("Level", level);
+            txtLevel.text = "Level : " + level;
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -31,11 +48,10 @@ public class CharacterSkills : MonoBehaviour
         }
 
     }
-    public void LowHealt()
+    public void LowHealt(float damage)
     {
-        slider.value -= 0.05f;
-        playerHealt -= 5;
-        txtHealt.text = playerHealt.ToString();
+        slider.value -= damage;
+        playerHealt -= damage*100;
     }
     public void BuySkil(int skilNo) //SkilNo:1 Speed, SkilNo:2 Knife
     {

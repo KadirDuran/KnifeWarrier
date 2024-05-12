@@ -37,7 +37,7 @@ public class KnifeCenter : MonoBehaviour
         }
     }
    
-    void Update()
+    void FixedUpdate()
     {
         transform.Rotate(0f, 0f, turnSpeed);
     }
